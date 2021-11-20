@@ -5,10 +5,12 @@
         public static void Main()
         {
             Snake snake = new Snake();
+            Apple apple = new Apple();
+            apple.draw();
 
             while (true)
             {
-                snake.move();
+                snake.move(apple);
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo cki = Console.ReadKey();
@@ -16,6 +18,29 @@
                 }
             }
 
+        }
+    }
+
+    class Apple
+    {
+        public Apple()
+        {
+            rand = new Random();
+            position = new Position(0, 0);
+        }
+        private Random rand;
+        public Position position { get; set; }
+        
+        public void draw()
+        {
+            int maxX = Console.WindowWidth;
+            int maxY = Console.WindowHeight;
+
+            position.x = rand.Next(maxX);
+            position.y = rand.Next(maxY);
+
+            Console.SetCursorPosition(position.x, position.y);
+            Console.WriteLine("O");
         }
     }
 
@@ -73,11 +98,12 @@
             }
         }
 
-        public void move()
+        public void move(Apple apple)
         {
             Position oldHeadPosition = positions.Last();
             int headX = oldHeadPosition.x;
             int headY = oldHeadPosition.y;
+            bool hasEaten = false;
 
             switch (vector)
             {
@@ -103,12 +129,21 @@
             Console.SetCursorPosition(newHeadPosition.x, newHeadPosition.y);
             Console.WriteLine("X");
 
+            if ((newHeadPosition.x == apple.position.x) && (newHeadPosition.y == apple.position.y))
+            {
+                hasEaten = true;
+                apple.draw();
+            }
+
             //Clear old position of tail and delete tail
             Position tailPosition = positions[0];
             Console.SetCursorPosition(tailPosition.x, tailPosition.y);
             Console.WriteLine(" ");
-            positions.RemoveAt(0);
-
+            if (!hasEaten)
+            {
+                positions.RemoveAt(0);
+            }
+            
             Thread.Sleep(100);
         }
     }
