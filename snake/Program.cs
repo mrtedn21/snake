@@ -23,6 +23,7 @@
                         snake.setVectorByKey(cki.Key);
                     }
                 }
+                snake.drawScore();
             }
 
         }
@@ -92,6 +93,7 @@
         public Snake()
         {
             vector = Vector.right;
+            score = 1;
 
             positions = new List<Position>();
             positions.Add(new Position(0, 0));
@@ -99,6 +101,16 @@
 
         public Vector vector { get; set; }
         private List<Position> positions;
+        private int score;
+
+        public void drawScore()
+        {
+            int maxX = Console.WindowWidth;
+            int maxY = Console.WindowHeight;
+
+            Console.SetCursorPosition(maxX - 3, maxY - 2);
+            Console.WriteLine(score);
+        }
 
         public void setVectorByKey(ConsoleKey key)
         {
@@ -161,6 +173,7 @@
             if ((newHeadPosition.x == apple.position.x) && (newHeadPosition.y == apple.position.y))
             {
                 hasEaten = true;
+                score += 1;
                 apple.draw();
             }
 
