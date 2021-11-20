@@ -20,6 +20,11 @@ enum Vector
 
 class Position
 {
+    public Position(int xParam, int yParam)
+    {
+        x = xParam;
+        y = yParam;
+    }
     public int x { get; set; }
     public int y { get; set; }
 }
@@ -30,13 +35,12 @@ class Snake
     {
         vector = Vector.right;
 
-        position = new Position();
-        position.x = 0;
-        position.y = 0;
+        positions = new List<Position>();
+        positions.Add(new Position(0, 0));
     }
 
     public Vector vector { get; set; }
-    private Position position;
+    private List<Position> positions;
 
     public void setVectorByKey(ConsoleKey key)
     {
@@ -62,25 +66,31 @@ class Snake
 
     public void move()
     {
+        Position oldHeadPosition = positions.Last();
+        int headX = oldHeadPosition.x;
+        int headY = oldHeadPosition.y;
+
         switch (vector)
         {
             case Vector.up:
-                position.y -= 1;
+                positions.Add(new Position(headX, headY - 1));
                 break;
 
             case Vector.down:
-                position.y += 1;
+                positions.Add(new Position(headX, headY + 1));
                 break;
 
             case Vector.left:
-                position.x -= 1;
+                positions.Add(new Position(headX - 1, headY));
                 break;
 
             case Vector.right:
-                position.x += 1;
+                positions.Add(new Position(headX + 1, headY));
                 break;
         }
-        Console.SetCursorPosition(position.x, position.y);
+
+        Position newHeadPosition = positions.Last();
+        Console.SetCursorPosition(newHeadPosition.x, newHeadPosition.y);
         Console.WriteLine("X");
         Thread.Sleep(100);
     }
