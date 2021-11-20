@@ -230,7 +230,7 @@
             {
                 return false;
             }
-            if (newPosition.y >= maxY)
+            if (newPosition.y > maxY - 1)
             {
                 return false;
             }
