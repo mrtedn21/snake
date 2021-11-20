@@ -89,9 +89,17 @@ class Snake
                 break;
         }
 
+        // Draw new position of head
         Position newHeadPosition = positions.Last();
         Console.SetCursorPosition(newHeadPosition.x, newHeadPosition.y);
         Console.WriteLine("X");
+
+        //Clear old position of tail and delete tail
+        Position tailPosition = positions[0];
+        Console.SetCursorPosition(tailPosition.x, tailPosition.y);
+        Console.WriteLine(" ");
+        positions.RemoveAt(0);
+
         Thread.Sleep(100);
     }
 }
