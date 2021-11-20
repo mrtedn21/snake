@@ -167,6 +167,11 @@
             {
                 Program.gameOver();
             }
+            correctPosition = chechForCrossSelfBody(newHeadPosition);
+            if (!correctPosition)
+            {
+                Program.gameOver();
+            }
             Console.SetCursorPosition(newHeadPosition.x, newHeadPosition.y);
             Console.WriteLine("X");
 
@@ -187,6 +192,22 @@
             }
             
             Thread.Sleep(100);
+        }
+
+        private bool chechForCrossSelfBody(Position newPosition)
+        {
+            // If all ok, function returns true
+            // But if newPosition cross over snake's body, functin returns false
+
+            foreach(Position p in positions.GetRange(0, positions.Count - 2))
+            {
+                if ((newPosition.x == p.x) && (newPosition.y == p.y))
+                {
+                    return false;
+                }
+            }
+
+            return true;
         }
 
         private bool checkNewPositionForBorders(Position newPosition)
