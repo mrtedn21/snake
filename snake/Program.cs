@@ -149,6 +149,11 @@
 
             // Draw new position of head
             Position newHeadPosition = positions.Last();
+            bool correctPosition = checkNewPositionForBorders(newHeadPosition);
+            if (!correctPosition)
+            {
+                Program.gameOver();
+            }
             Console.SetCursorPosition(newHeadPosition.x, newHeadPosition.y);
             Console.WriteLine("X");
 
@@ -168,6 +173,34 @@
             }
             
             Thread.Sleep(100);
+        }
+
+        private bool checkNewPositionForBorders(Position newPosition)
+        {
+            // Function returns true if all ok
+            // And returns false if new position beyond borders
+
+            int maxX = Console.WindowWidth;
+            int maxY = Console.WindowHeight;
+
+            if (newPosition.x >= maxX)
+            {
+                return false;
+            }
+            if (newPosition.x < 0)
+            {
+                return false;
+            }
+            if (newPosition.y < 0)
+            {
+                return false;
+            }
+            if (newPosition.y >= maxY)
+            {
+                return false;
+            }
+
+            return true;
         }
     }
 }
