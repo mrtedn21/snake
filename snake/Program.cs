@@ -24,5 +24,16 @@ for (int i = 0; i < 30; i++)
 
     Console.SetCursorPosition(position[0], position[1]);
     Console.Write("+");
+
+    position = detectPosition(i - 6);
+
+    try
+    {
+        Console.SetCursorPosition(position[0], position[1]);
+        Console.Write(" ");
+    }
+    catch (ArgumentOutOfRangeException)
+    { }
+
     Thread.Sleep(100);
 }
