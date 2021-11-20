@@ -1,14 +1,28 @@
-﻿for (int i = 0; i < 30; i++)
+﻿int[] detectPosition(int index)
 {
-    if (i < 15)
+    int[] res = new int[2];
+
+    if (index < 15)
     {
-        Console.SetCursorPosition(i, i);
+        res[0] = index;
+        res[1] = index;
+        return res;
     }
     else
     {
-        Console.SetCursorPosition(i, 30 - i);
+        res[0] = index;
+        res[1] = 30 - index;
+        return res;
     }
-    
+}
+
+int[] position = new int[2];
+
+for (int i = 0; i < 30; i++)
+{
+    position = detectPosition(i);
+
+    Console.SetCursorPosition(position[0], position[1]);
     Console.Write("+");
     Thread.Sleep(100);
 }
