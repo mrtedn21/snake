@@ -14,10 +14,33 @@
                 if (Console.KeyAvailable)
                 {
                     ConsoleKeyInfo cki = Console.ReadKey();
-                    snake.setVectorByKey(cki.Key);
+                    if ((cki.Key == ConsoleKey.Enter) || (cki.Key == ConsoleKey.Escape))
+                    {
+                        gameOver();
+                        return;
+                    }
+                    else
+                    {
+                        snake.setVectorByKey(cki.Key);
+                    }
                 }
             }
 
+        }
+
+        public static void gameOver()
+        {
+            int maxX = Console.WindowWidth;
+            int maxY = Console.WindowHeight;
+
+            Console.Clear();
+            Console.SetCursorPosition(maxX / 2 - 4, maxY / 2);
+            Console.WriteLine("GAME OVER");
+
+            for (int i = 0; i < maxY / 2 - 3; i++)
+            {
+                Console.WriteLine();
+            }
         }
     }
 
