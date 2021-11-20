@@ -17,7 +17,6 @@
                     if ((cki.Key == ConsoleKey.Enter) || (cki.Key == ConsoleKey.Escape))
                     {
                         gameOver();
-                        return;
                     }
                     else
                     {
@@ -41,6 +40,8 @@
             {
                 Console.WriteLine();
             }
+
+            System.Environment.Exit(0);
         }
     }
 
