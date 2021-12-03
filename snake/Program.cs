@@ -7,6 +7,7 @@
             Snake snake = new Snake();
             Apple apple = new Apple();
             apple.draw();
+            drawBottobLine();
 
             while (true)
             {
@@ -44,6 +45,19 @@
 
             System.Environment.Exit(0);
         }
+
+        public static void drawBottobLine()
+        {
+            int maxX = Console.WindowWidth;
+            int maxY = Console.WindowHeight;
+            int bottomY = maxY - 2;
+
+            for (int x = 0; x < maxX; x++)
+            {
+                Console.SetCursorPosition(x, bottomY);
+                Console.WriteLine("-");
+            }
+        }
     }
 
     class Apple
@@ -59,7 +73,7 @@
         public void draw()
         {
             int maxX = Console.WindowWidth;
-            int maxY = Console.WindowHeight;
+            int maxY = Console.WindowHeight - 3;
 
             position.x = rand.Next(maxX);
             position.y = rand.Next(maxY);
@@ -216,7 +230,7 @@
             // And returns false if new position beyond borders
 
             int maxX = Console.WindowWidth;
-            int maxY = Console.WindowHeight;
+            int maxY = Console.WindowHeight - 2;
 
             if (newPosition.x >= maxX)
             {
