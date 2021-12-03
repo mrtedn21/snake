@@ -224,6 +224,32 @@
             return true;
         }
 
+        private void setNewPositionIfOnBorders(Position newPosition)
+        {
+            // Function returns true if all ok
+            // And returns false if new position beyond borders
+
+            int maxX = Console.WindowWidth;
+            int maxY = Console.WindowHeight - 2;
+
+            if (newPosition.x >= maxX)
+            {
+                newPosition.x = 0;
+            }
+            if (newPosition.x < 0)
+            {
+                newPosition.x = maxX - 1;
+            }
+            if (newPosition.y < 0)
+            {
+                newPosition.y = maxY - 1;
+            }
+            if (newPosition.y > maxY - 1)
+            {
+                newPosition.y = 0;
+            }
+        }
+
         private bool checkNewPositionForBorders(Position newPosition)
         {
             // Function returns true if all ok
