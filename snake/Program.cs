@@ -239,7 +239,7 @@
                 positions.RemoveAt(0);
             }
             
-            Thread.Sleep(100);
+            Thread.Sleep(50);
         }
 
         private bool chechForCrossSelfBody(Position newPosition)
