@@ -4,7 +4,25 @@
     {
         public static void Main()
         {
-            Snake snake = new Snake();
+            // Ask user to select mode
+            Console.WriteLine("There are two modes of game:");
+            Console.WriteLine("1. Infinite - when snake cross the border, to continue moving in opposite place of map");
+            Console.WriteLine("2. Strict - when snake cross the border, game over");
+            Console.WriteLine("Print 1 or 2 to select game mode and press Enter");
+
+            GameMode gameMode = new GameMode();
+            if (Console.ReadLine() == "1")
+            {
+                gameMode = GameMode.infinite;
+            }
+            else
+            {
+                gameMode = GameMode.strict;
+            }
+
+            Console.Clear();
+
+            Snake snake = new Snake(gameMode);
             Apple apple = new Apple();
             apple.draw();
             drawBottobLine();
@@ -90,6 +108,11 @@
         left,
         right,
     }
+    enum GameMode
+    {
+        infinite,
+        strict,
+    }
 
     class Position
     {
@@ -104,15 +127,17 @@
 
     class Snake
     {
-        public Snake()
+        public Snake(GameMode gm)
         {
             vector = Vector.right;
+            gameMode = gm;
             score = 1;
 
             positions = new List<Position>();
             positions.Add(new Position(0, 0));
         }
 
+        GameMode gameMode { get; set; }
         public Vector vector { get; set; }
         private List<Position> positions;
         private int score;
@@ -176,10 +201,19 @@
 
             // Draw new position of head
             Position newHeadPosition = positions.Last();
-            bool correctPosition = checkNewPositionForBorders(newHeadPosition);
-            if (!correctPosition)
+            bool correctPosition;
+
+            if (gameMode == GameMode.infinite)
             {
-                Program.gameOver();
+                setNewPositionIfOnBorders(newHeadPosition);
+            }
+            else
+            {
+                correctPosition = checkNewPositionForBorders(newHeadPosition);
+                if (!correctPosition)
+                {
+                    Program.gameOver();
+                }
             }
             correctPosition = chechForCrossSelfBody(newHeadPosition);
             if (!correctPosition)
@@ -226,8 +260,9 @@
 
         private void setNewPositionIfOnBorders(Position newPosition)
         {
-            // Function returns true if all ok
-            // And returns false if new position beyond borders
+            // Function sets new head position if head wants cross borders
+            // To move head at opposite place of game square to let for snake
+            // moving infinitely
 
             int maxX = Console.WindowWidth;
             int maxY = Console.WindowHeight - 2;
